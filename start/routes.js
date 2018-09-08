@@ -10,4 +10,7 @@ Route.get('files/:name', 'FileController.show')
 
 Route.resource('agencies', 'AgencyController').apiOnly()
 
-Route.resource('projects', 'ProjectController').apiOnly()
+Route.post('projects', 'ProjectController.store')
+Route.get('projects', 'ProjectController.index')
+Route.get('projects/:slug', 'ProjectController.show')
+Route.put('projects/:id', 'ProjectController.update')

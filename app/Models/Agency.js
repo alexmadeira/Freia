@@ -3,7 +3,7 @@
 const Model = use('Model')
 
 class Agency extends Model {
-  file () {
+  image () {
     return this.belongsTo('App/Models/File')
   }
 }
