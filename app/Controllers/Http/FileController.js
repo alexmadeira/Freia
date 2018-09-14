@@ -1,41 +1,68 @@
 'use strict'
 const File = use('App/Models/File')
-const Helpers = use('Helpers')
+const Env = use('Env')
+
+const fs = require('fs')
+const awsConfig = require('../../../config/aws')
+const AWS = require('aws-sdk')
+
+AWS.config.update({
+  accessKeyId: Env.get('AWS_ACCESS_KEY'),
+  secretAccessKey: Env.get('AWS_SECRET_ACCESS_KEY')
+})
+
+const s3 = new AWS.S3(awsConfig.s3)
 
 class FileController {
   async store ({ request, response }) {
-    try {
-      if (!request.file('file')) return
+    if (!request.file('file')) return
 
-      const upload = request.file('file')
+    const upload = request.file('file')
 
-      const fileName = `${Date.now()}.${upload.subtype}`
+    let dateObj = new Date()
+    let month = dateObj.getUTCMonth() + 1
+    let year = dateObj.getUTCFullYear()
 
-      await upload.move(Helpers.tmpPath('uploads'), { name: fileName })
+    let folder = year + '-' + month
 
-      if (!upload.moved()) {
-        throw upload.error()
-      }
+    const Body = fs.createReadStream(upload.tmpPath)
+    const Key = `${folder}/${Date.now()}-${upload.clientName}`
 
-      const file = await File.create({
-        file: fileName,
-        name: upload.clientName,
-        type: upload.type,
-        subtype: upload.subtype
+    // return upload
+    const s3File = await s3
+      .upload({
+        ...awsConfig.bucket,
+        Body,
+        Key,
+        ContentDisposition: upload.headers['content-disposition'],
+        ContentType: upload.headers['content-type']
       })
+      .promise()
 
-      return file
-    } catch (err) {
-      return response
-        .status(err.status)
-        .send({ error: { message: 'erro no upload de arquivos' } })
-    }
+    const file = await File.create({
+      file: s3File.Location,
+      name: upload.clientName,
+      key: Key,
+      type: upload.type,
+      subtype: upload.subtype,
+      contentType: upload.headers['content-type']
+    })
+
+    return file
   }
 
   async show ({ params, response }) {
     const file = await File.findByOrFail('name', params.name)
 
-    return response.download(Helpers.tmpPath(`uploads/${file.file}`))
+    const s3File = await s3
+      .getObject({
+        Bucket: awsConfig.bucket.Bucket,
+        Key: file.key
+      })
+      .promise()
+
+    response.header('Content-type', file.contentType)
+    response.send(s3File.Body)
   }
 }
 
