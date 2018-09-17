@@ -77,6 +77,7 @@ class ProjectSchema extends Schema {
       table.string('backgroundColor')
       table.string('previewColor')
       table.integer('order').unsigned()
+      table.timestamps()
     })
   }
 
