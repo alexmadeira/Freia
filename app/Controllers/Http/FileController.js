@@ -28,7 +28,6 @@ class FileController {
     const Body = fs.createReadStream(upload.tmpPath)
     const Key = `${folder}/${Date.now()}-${upload.clientName}`
 
-    // return upload
     const s3File = await s3
       .upload({
         ...awsConfig.bucket,
@@ -37,12 +36,12 @@ class FileController {
         ContentDisposition: upload.headers['content-disposition'],
         ContentType: upload.headers['content-type']
       })
-      .promise()
 
+      .promise()
     const file = await File.create({
       file: s3File.Location,
-      name: upload.clientName,
       key: Key,
+      name: upload.clientName,
       type: upload.type,
       subtype: upload.subtype,
       contentType: upload.headers['content-type']
