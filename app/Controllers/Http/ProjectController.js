@@ -2,8 +2,10 @@
 const Project = use('App/Models/Project')
 
 class ProjectController {
-  async index () {
-    const project = await Project.query()
+  async index ({ request }) {
+    let { limit, offset, order } = request.get()
+
+    const projectQuery = Project.query()
       .with('agency')
       .with('agency.image')
       .with('logo')
@@ -14,7 +16,12 @@ class ProjectController {
       .with('destaqueEsquerda')
       .with('destaqueCentro')
       .with('destaqueDireita')
-      .fetch()
+
+    if (order) projectQuery.orderBy('order', order)
+    if (limit) projectQuery.limit(limit)
+    if (offset) projectQuery.offset(offset)
+
+    const project = await projectQuery.fetch()
 
     return project
   }
@@ -33,7 +40,8 @@ class ProjectController {
       'produtoDestaque_id',
       'destaqueEsquerda_id',
       'destaqueCentro_id',
-      'destaqueDireita_id'
+      'destaqueDireita_id',
+      'order'
     ])
     const project = await Project.create(data)
 
