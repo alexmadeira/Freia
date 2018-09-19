@@ -41,7 +41,8 @@ class ProjectController {
       'destaqueEsquerda_id',
       'destaqueCentro_id',
       'destaqueDireita_id',
-      'order'
+      'order',
+      'url'
     ])
     const project = await Project.create(data)
 
@@ -81,7 +82,9 @@ class ProjectController {
       'produtoDestaque_id',
       'destaqueEsquerda_id',
       'destaqueCentro_id',
-      'destaqueDireita_id'
+      'destaqueDireita_id',
+      'order',
+      'url'
     ])
 
     project.merge(data)
