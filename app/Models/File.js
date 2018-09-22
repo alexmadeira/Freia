@@ -4,10 +4,13 @@ const Env = use('Env')
 
 class File extends Model {
   static get computed () {
-    return ['url']
+    return ['url', 'thumb']
   }
   getUrl ({ name }) {
     return `${Env.get('APP_URL')}/files/${name}`
+  }
+  getThumb ({ name }) {
+    return `${Env.get('APP_URL')}/files/${name}?thumb=true`
   }
 }
 

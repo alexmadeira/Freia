@@ -3,7 +3,7 @@ const Project = use('App/Models/Project')
 
 class ProjectController {
   async index ({ request }) {
-    let { limit, offset, order } = request.get()
+    const { limit, offset, order } = request.get()
 
     const projectQuery = Project.query()
       .with('agency')

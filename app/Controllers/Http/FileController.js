@@ -3,6 +3,7 @@ const File = use('App/Models/File')
 const Env = use('Env')
 
 const fs = require('fs')
+const sharp = require('sharp')
 const awsConfig = require('../../../config/aws')
 const AWS = require('aws-sdk')
 
@@ -27,6 +28,7 @@ class FileController {
 
     const Body = fs.createReadStream(upload.tmpPath)
     const Key = `${folder}/${Date.now()}-${upload.clientName}`
+    const thumb = await sharp(upload.tmpPath).resize(150)
 
     const s3File = await s3
       .upload({
@@ -36,10 +38,21 @@ class FileController {
         ContentDisposition: upload.headers['content-disposition'],
         ContentType: upload.headers['content-type']
       })
-
       .promise()
+
+    const s3Thumb = await s3
+      .upload({
+        ...awsConfig.bucket,
+        Body: thumb,
+        Key: `thumb/${Key}`,
+        ContentDisposition: upload.headers['content-disposition'],
+        ContentType: upload.headers['content-type']
+      })
+      .promise()
+
     const file = await File.create({
       file: s3File.Location,
+      thumb: s3Thumb.Location,
       key: Key,
       name: upload.clientName,
       type: upload.type,
@@ -50,13 +63,16 @@ class FileController {
     return file
   }
 
-  async show ({ params, response }) {
+  async show ({ params, response, request }) {
+    const { thumb } = request.get()
+
     const file = await File.findByOrFail('name', params.name)
+    const Key = thumb ? `thumb/${file.key}` : file.key
 
     const s3File = await s3
       .getObject({
         Bucket: awsConfig.bucket.Bucket,
-        Key: file.key
+        Key
       })
       .promise()
 
