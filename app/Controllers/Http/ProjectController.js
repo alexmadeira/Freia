@@ -56,7 +56,7 @@ class ProjectController {
 
     await project.load('agency.image')
     await project.load('logo')
-    await project.load('nextProject')
+    await project.load('nextProject.preview')
     await project.load('background')
     await project.load('preview')
     await project.load('destaque')
