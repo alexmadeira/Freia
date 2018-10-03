@@ -55,9 +55,6 @@ class ProjectController {
     const project = await Project.findByOrFail('slug', slug)
 
     await project.load('agency.image')
-    await project.load('nextProject.logo')
-    await project.load('nextProject.background')
-    await project.load('nextProject.preview')
     await project.load('logo')
     await project.load('background')
     await project.load('preview')
@@ -66,6 +63,11 @@ class ProjectController {
     await project.load('destaqueEsquerda')
     await project.load('destaqueCentro')
     await project.load('destaqueDireita')
+    await project.loadMany([
+      'nextProject.logo',
+      'nextProject.preview',
+      'nextProject.background'
+    ])
 
     return project
   }
