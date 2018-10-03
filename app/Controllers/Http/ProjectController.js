@@ -56,7 +56,6 @@ class ProjectController {
 
     await project.load('agency.image')
     await project.load('logo')
-    await project.load('nextProject.preview')
     await project.load('background')
     await project.load('preview')
     await project.load('destaque')
@@ -64,6 +63,10 @@ class ProjectController {
     await project.load('destaqueEsquerda')
     await project.load('destaqueCentro')
     await project.load('destaqueDireita')
+
+    await project.load('nextProject.logo')
+    await project.load('nextProject.background')
+    await project.load('nextProject.preview')
 
     return project
   }
