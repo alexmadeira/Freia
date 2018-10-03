@@ -33,6 +33,7 @@ class ProjectController {
       'backgroundColor',
       'previewColor',
       'agency_id',
+      'nextProject_id',
       'logo_id',
       'background_id',
       'preview_id',
@@ -55,6 +56,7 @@ class ProjectController {
 
     await project.load('agency.image')
     await project.load('logo')
+    await project.load('nextProject')
     await project.load('background')
     await project.load('preview')
     await project.load('destaque')
@@ -75,6 +77,7 @@ class ProjectController {
       'backgroundColor',
       'previewColor',
       'agency_id',
+      'nextProject_id',
       'logo_id',
       'background_id',
       'preview_id',

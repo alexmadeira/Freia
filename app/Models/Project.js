@@ -18,6 +18,9 @@ class Project extends Model {
   agency () {
     return this.belongsTo('App/Models/Agency')
   }
+  nextProject () {
+    return this.belongsTo('App/Models/Project', 'nextProject_id', 'id')
+  }
   logo () {
     return this.belongsTo('App/Models/File', 'logo_id', 'id')
   }
