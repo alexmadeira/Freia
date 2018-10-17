@@ -7,10 +7,10 @@ class File extends Model {
     return ['url', 'thumb']
   }
   getUrl ({ name }) {
-    return `${Env.get('APP_URL')}/files/${name}`
+    return `${Env.get('APP_BASEPATH')}/files/${name}`
   }
   getThumb ({ name }) {
-    return `${Env.get('APP_URL')}/files/${name}?thumb=true`
+    return `${Env.get('APP_BASEPATH')}/files/${name}?thumb=true`
   }
 }
 
