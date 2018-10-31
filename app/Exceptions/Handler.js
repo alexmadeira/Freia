@@ -16,6 +16,7 @@ class ExceptionHandler extends BaseExceptionHandler {
     if (Env.get('NODE_ENV') === 'development') {
       const youch = new Youch(error, request.request)
       const errorJSON = await youch.toJSON()
+      console.log(errorJSON)
       return response.status(error.status).send(errorJSON)
     }
 
