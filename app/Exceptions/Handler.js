@@ -23,7 +23,7 @@ class ExceptionHandler extends BaseExceptionHandler {
   }
 
   async report (error, { request }) {
-    Sentry.init(Config.get('services.sentry.dsn'))
+    Sentry.init(Config.get('services.sentry'))
     Sentry.captureException(error)
   }
 }
