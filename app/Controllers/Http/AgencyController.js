@@ -11,7 +11,7 @@ class AgencyController {
   }
 
   async store ({ request }) {
-    const data = request.only([
+    const data = request.onsly([
       'file_id',
       'name',
       'description',
@@ -24,7 +24,7 @@ class AgencyController {
     return agency
   }
   async update ({ params, request }) {
-    const agency = await Agency.findOrFsail(params.id)
+    const agency = await Agency.findOrFail(params.id)
     const data = request.only([
       'file_id',
       'name',
