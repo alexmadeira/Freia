@@ -6,7 +6,6 @@ class AgencyController {
     const agency = await Agency.query()
       .with('image')
       .fetch()
-
     return agency
   }
 
