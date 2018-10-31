@@ -11,7 +11,7 @@ class AgencyController {
   }
 
   async store ({ request }) {
-    const data = request.onsly([
+    const data = request.only([
       'file_id',
       'name',
       'description',
