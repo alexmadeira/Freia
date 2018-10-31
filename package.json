@@ -24,6 +24,7 @@
     "@adonisjs/framework": "^5.0.7",
     "@adonisjs/ignitor": "^2.0.6",
     "@adonisjs/lucid": "^5.0.4",
+    "@sentry/node": "4.2.3",
     "aws-sdk": "^2.312.0",
     "pg": "^7.4.3",
     "sharp": "^0.20.8",
