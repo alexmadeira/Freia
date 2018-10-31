@@ -24,7 +24,7 @@ class AgencyController {
     return agency
   }
   async update ({ params, request }) {
-    const agency = await Agency.findOrFail(params.id)
+    const agency = await Agency.findOrFsail(params.id)
     const data = request.only([
       'file_id',
       'name',
