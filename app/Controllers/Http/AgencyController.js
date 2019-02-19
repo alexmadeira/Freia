@@ -5,6 +5,7 @@ class AgencyController {
   async index () {
     const agency = await Agency.query()
       .with('image')
+      .with('logo')
       .fetch()
     return agency
   }
@@ -15,6 +16,8 @@ class AgencyController {
       'name',
       'description',
       'role',
+      'roleDescription',
+      'logo_id',
       'enter',
       'exit'
     ])
@@ -29,6 +32,8 @@ class AgencyController {
       'name',
       'description',
       'role',
+      'roleDescription',
+      'logo_id',
       'enter',
       'exit'
     ])
