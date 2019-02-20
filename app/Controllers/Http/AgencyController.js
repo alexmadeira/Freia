@@ -2,11 +2,18 @@
 const Agency = use('App/Models/Agency')
 
 class AgencyController {
-  async index () {
-    const agency = await Agency.query()
+  async index ({ request }) {
+    const { order } = request.get()
+    const arrayOrder = order.split(':')
+
+    const agencyQuery = Agency.query()
       .with('image')
       .with('logo')
-      .fetch()
+
+    if (order) agencyQuery.orderBy(arrayOrder[0], arrayOrder[1])
+
+    const agency = await agencyQuery.fetch()
+
     return agency
   }
 
