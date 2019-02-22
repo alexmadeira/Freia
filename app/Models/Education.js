@@ -3,8 +3,8 @@
 const Model = use('Model')
 
 class Education extends Model {
-  image () {
-    return this.belongsTo('App/Models/File')
+  logo () {
+    return this.belongsTo('App/Models/File', 'logo_id', 'id')
   }
 }
 

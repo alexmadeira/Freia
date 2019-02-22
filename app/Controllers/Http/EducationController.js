@@ -5,7 +5,7 @@ class EducationController {
   async index ({ request }) {
     const { order } = request.get()
 
-    const educationQuery = Education.query().with('image')
+    const educationQuery = Education.query().with('logo')
 
     if (order) {
       const arrayOrder = order.split(':')
