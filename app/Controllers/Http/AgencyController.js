@@ -63,6 +63,7 @@ class AgencyController {
 
     return agency
   }
+
   async destroy ({ params }) {
     const agency = await Agency.findOrFail(params.id)
 
