@@ -15,7 +15,7 @@ class EducationSchema extends Schema {
         .onUpdate('CASCADE')
         .onDelete('SET NULL')
       table.string('name').notNullable()
-      table.string('sobrenome ').notNullable()
+      table.string('sobrenome').notNullable()
       table.string('description').notNullable()
       table.timestamps()
     })

@@ -18,7 +18,7 @@ class EducationController {
   }
 
   async store ({ request }) {
-    const data = request.only(['logo_id', 'name', 'description'])
+    const data = request.only(['logo_id', 'name', 'sobrenome', 'description'])
     const education = await Education.create(data)
 
     return education
@@ -35,7 +35,7 @@ class EducationController {
 
   async update ({ params, request }) {
     const education = await Education.findOrFail(params.id)
-    const data = request.only(['logo_id', 'name', 'description'])
+    const data = request.only(['logo_id', 'name', 'sobrenome', 'description'])
 
     education.merge(data)
     await education.save()
