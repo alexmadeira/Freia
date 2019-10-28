@@ -2,7 +2,7 @@
 const Project = use('App/Models/Project')
 
 class ProjectController {
-  async index ({ request }) {
+  async index ({ request,response }) {
     const { limit, offset, order } = request.get()
 
     const projectQuery = Project.query()
@@ -46,6 +46,8 @@ class ProjectController {
       'url'
     ])
     const project = await Project.create(data)
+    
+    response.header('Access-Control-Expose-Headers', 'Content-Range');
 
     return project
   }
