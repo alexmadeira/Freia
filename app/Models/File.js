@@ -1,16 +1,16 @@
 'use strict'
 const Model = use('Model')
-const Env = use('Env')
+// const Env = use('Env')
 
 class File extends Model {
   static get computed () {
     return ['url', 'thumb']
   }
-  getUrl ({ name }) {
-    return `${Env.get('APP_BASEPATH')}/files/${name}`
+  getUrl ({ key }) {
+    return `https://files.alexmadeira.com.br/mark-viii/${key}`
   }
-  getThumb ({ name }) {
-    return `${Env.get('APP_BASEPATH')}/files/${name}?thumb=true`
+  getThumb ({ key }) {
+    return `https://files.alexmadeira.com.br/mark-viii/${key}?thumb=true`
   }
 }
 
