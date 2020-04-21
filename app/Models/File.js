@@ -7,10 +7,10 @@ class File extends Model {
     return ['url', 'thumb']
   }
   getUrl ({ key }) {
-    return `https://files.alexmadeira.com.br/mark-viii/${key}`
+    return `http://alexmadeira.sirv.com/mark-viii/${key}`
   }
   getThumb ({ key }) {
-    return `https://files.alexmadeira.com.br/mark-viii/${key}?thumb=true`
+    return `http://alexmadeira.sirv.com/mark-viii/${key}?thumb=true`
   }
 }
 
